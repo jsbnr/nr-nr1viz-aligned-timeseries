@@ -1,0 +1,6 @@
+{
+    "schemaType": "NERDPACK",
+    "id": "32f9d671-8201-44eb-a805-9765b4672954",
+    "displayName": "Aligned Timeseries Custom Vis",
+    "description": "Custom visualisation for displaying timeseries aligned on chart"
+}

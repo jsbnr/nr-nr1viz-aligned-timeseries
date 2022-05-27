@@ -1,0 +1,59 @@
+{
+    "schemaType": "VISUALIZATION",
+    "id": "aligned-timeseries",
+    "displayName": "Aligned Timeseries",
+    "description": "Displays timeseries data from different periods on the same chart aligned",
+    "configuration": [
+        {
+            "name": "alignment",
+            "title": "Alignment",
+            "description": "How the timeeries should be aligned",
+            "type": "enum",
+            "items": [
+                {
+                  "title": "Start: Align by timeseries start points",
+                  "value": "start"
+                },
+                {
+                    "title": "Middle: Align by timeseries mid points ",
+                    "value": "middle"
+                },
+                {
+                    "title": "End: Align by timeseries end points",
+                    "value": "end"
+                }
+            ]
+        },
+        {
+            "name": "colorMap",
+            "title": "Colour map (optional)",
+            "description": "A comma serperated list of color hex values or css colours",
+            "type": "string"
+        },
+        {
+            "name": "nrqlQueries",
+            "title": "NRQL Queries",
+            "type": "collection",
+            "items": [
+                {
+                    "name": "accountId",
+                    "title": "Account ID",
+                    "description": "Account ID to be associated with the query",
+                    "type": "account-id"
+                },
+                {
+                    "name": "query",
+                    "title": "Query",
+                    "description": "NRQL query for visualization",
+                    "type": "nrql"
+                },
+                {
+                    "name": "color",
+                    "title": "Series colour",
+                    "description": "A hex/css color to override the default color",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}

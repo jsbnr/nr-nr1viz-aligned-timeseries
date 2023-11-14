@@ -6,14 +6,17 @@ const defaultColors=['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#91
 
 
 function AlignedTimeseries(props) {
-    const {nrqlQueries, alignment, colorMap} = props;
+    const {customNrqlQueries, nrqlQueries, alignment, colorMap} = props;
     const [queryResults, setQueryResults] = useState(null);
     
+    //cinfug option used to be called "nrqlQueries" but this hit a bug with a pltaform release. To be deployable without immediately breaking charts we support the old config, but you will need to upgrade.
+    let NRQLqueries = (customNrqlQueries !== null && customNrqlQueries !== undefined) ? customNrqlQueries : (nrqlQueries !== null && nrqlQueries!==undefined) ?  nrqlQueries : []; 
+
     let colors = colorMap ? colorMap.split(',') : defaultColors
     
     
     useEffect(async () => { 
-            let promises=nrqlQueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})})
+            let promises=NRQLqueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})})
             let data = await Promise.all(promises)
             setQueryResults(data)
      },[props]);
@@ -58,7 +61,7 @@ function AlignedTimeseries(props) {
                         row.x= row.x + offset
                     })
                 } 
-                r.data[0].metadata.color=nrqlQueries[idx].color ? nrqlQueries[idx].color : colors[idx % colors.length]
+                r.data[0].metadata.color=NRQLqueries[idx].color ? NRQLqueries[idx].color : colors[idx % colors.length]
             }
         })
 

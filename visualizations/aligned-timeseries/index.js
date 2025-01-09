@@ -7,6 +7,7 @@ const defaultColors=[ '#3cb44b', '#e6194b', '#4363d8', '#f58231', '#911eb4', '#4
 
 
 function AlignedTimeseries(props) {
+
     const {customNrqlQueries, nrqlQueries, alignment, colorMap} = props;
     const [queryResults, setQueryResults] = useState(null);
     
@@ -26,11 +27,19 @@ function AlignedTimeseries(props) {
 
     }
 
-    
-    useEffect(async () => { 
-            let promises=NRQLqueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})})
-            let data = await Promise.all(promises)
-            setQueryResults(data)
+
+    useEffect(() => { 
+        const fetchData = async () => {
+            try {
+                    let promises=NRQLqueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})});
+                    let data = await Promise.all(promises);
+                    setQueryResults(data);  
+            } catch (error) {
+                console.error(error)
+            }
+           
+        }
+        fetchData();
      },[props]);
 
    
